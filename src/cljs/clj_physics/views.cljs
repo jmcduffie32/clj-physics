@@ -94,24 +94,25 @@
                                  :width  canvas-width}}])}))
 
 (defn home-panel []
-  (let [name (re-frame/subscribe [::subs/name])]
-    [:div
-     [:h1 (str "Hello from " @name ". This is the Home Page.")]
+  (let []
+    [:section
+     [:header "Basic projectile motion example"]
 
-     [:div
-      [:a {:href "#/about"}
-       "go to About Page"]]
 
-     [:div
+     [:form
       [:label
        "vy0"
-       [:input {:type "number"
+       [:input {:type "range"
+                :min 0
+                :max 100
                 :value (get-in @state [:particles 0 :vy])
                 :on-change #(swap! state assoc-in [:particles 0 :vy]
                                    (-> % .-target .-value))}]]
       [:label
        "vx0"
-       [:input {:type "number"
+       [:input {:type "range"
+                :min 0
+                :max 100
                 :value (get-in @state [:particles 0 :vx])
                 :on-change #(swap! state assoc-in [:particles 0 :vx]
                                    (-> % .-target .-value))}]]
@@ -121,9 +122,10 @@
                 :readonly true
                 :value (.toFixed (get @state :delta-t) 2)}]]
       [:button
-       {:on-click #(swap! state reset-world)}
+       {:type "button"
+        :on-click #(swap! state reset-world)}
        "set t = 0"]]
-     [canvas-page]]))
+     [:aside [canvas-page]]]))
 
 
 ;; about
